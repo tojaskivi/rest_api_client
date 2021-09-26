@@ -1,0 +1,104 @@
+@import "reset";
+@import "meta";
+
+h1,
+h2,
+h3 {
+  color: $primary;
+}
+
+body {
+  background: $dshade;
+}
+main {
+  max-width: $fullWidth;
+  box-shadow: 0 0.2rem 0.5rem #3333;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: $laccent;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 0.2rem 0.5rem;
+  }
+
+  th {
+    text-align: left;
+    background: $lshade;
+    &:nth-child(n+3){
+        text-align: center;
+    }
+  }
+
+  td {
+    position: relative;
+    padding: 5px 10px;
+
+    &:nth-child(n+3){
+        text-align: center;
+    }
+
+    .table-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      button {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  tr {
+    .strikeout td:before {
+      content: " ";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      border-bottom: 1px solid #111;
+      width: 100%;
+    }
+
+    &:nth-child(even) {
+      background: rgba($lshade, 0.2);
+    }
+
+    &:hover {
+      background: rgba($lshade, 0.4);
+    }
+  }
+}
+
+form {
+  .form-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    input {
+      border-radius: 0.2rem;
+      border: none;
+      background: rgba($daccent, 0.2);
+      padding: 0.2rem 0.4rem;
+    }
+  }
+  label {
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
