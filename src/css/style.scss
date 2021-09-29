@@ -10,6 +10,7 @@ h3 {
 body {
   background: $dshade;
 }
+
 main {
   max-width: $fullWidth;
   box-shadow: 0 0.2rem 0.5rem #3333;
@@ -40,23 +41,30 @@ table {
   th {
     text-align: left;
     background: $lshade;
-    &:nth-child(n+3){
-        text-align: center;
+
+    &:nth-child(n+3) {
+      text-align: center;
     }
+  }
+
+  .loading {
+    margin: auto;
+    display: flex;
   }
 
   td {
     position: relative;
     padding: 5px 10px;
 
-    &:nth-child(n+3){
-        text-align: center;
+    &:nth-child(n+3) {
+      text-align: center;
     }
 
     .table-buttons {
       display: flex;
       justify-content: center;
       gap: 1rem;
+
       button {
         font-size: 1.2rem;
       }
@@ -83,22 +91,100 @@ table {
   }
 }
 
-form {
-  .form-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    input {
-      border-radius: 0.2rem;
-      border: none;
-      background: rgba($daccent, 0.2);
-      padding: 0.2rem 0.4rem;
+
+//label {
+//  font-weight: bold;
+//  font-size: 0.8rem;
+//  display: flex;
+//  flex-direction: column;
+//
+//  span {
+//    position: absolute;
+//    z-index: -9999;
+//    color: #0000;
+//  }
+//
+//}
+
+.form-style-7 {
+  max-width: 400px;
+  margin: 50px auto;
+  border-radius: 2px;
+  box-shadow: 0 0.2rem 0.5rem #3333;
+  padding: 1rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+
+    li {
+      display: block;
+      padding: .6rem;
+      border: 1px solid #DDDDDD;
+      margin-bottom: 30px;
+      border-radius: .5rem;
+
+      &:last-child {
+        border: none;
+        margin-bottom: 0px;
+        text-align: center;
+      }
+
+
+      label {
+        display: block;
+        float: left;
+        margin-top: -1.3rem;
+        background: #fff;
+
+        position: relative;
+        z-index: 999;
+        padding: .1rem .5rem;
+        font-size: .8rem;
+        overflow: hidden;
+      }
+
+      input[type="text"],
+      input[type="url"] {
+        width: 100%;
+        display: block;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        padding: .2rem .4rem;
+      }
+
+      span {
+        background: $lshade;
+        display: block;
+        padding: 3px;
+        margin: -.6rem;
+        color:$primary;
+        margin-top: 0;
+        text-align: center;
+        font-size: .8rem;
+        font-weight: bold;
+        border-radius: 0 0 .3rem .3rem;
+      }
+
+
+      input[type="submit"],
+      input[type="button"] {
+        background: $primary;
+        border: none;
+        padding: .7rem 1.4rem;
+        box-shadow: 0  .2rem .1rem darken($primary, 20);
+        border-radius: .3rem;
+        color: #D2E2FF;
+      }
     }
   }
-  label {
-    font-weight: bold;
-    font-size: 0.8rem;
-    display: flex;
-    flex-direction: column;
-  }
+}
+
+.form-style-7 input[type="submit"]:hover,
+.form-style-7 input[type="button"]:hover {
+  background: lighten($primary, 10);
+  color: #fff;
 }

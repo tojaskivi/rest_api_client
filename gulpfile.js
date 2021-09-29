@@ -56,4 +56,5 @@ function liveServer() {
   );
 }
 
+exports.build = series(htmlTask, sassTask, jsTask, assetsTask);
 exports.default = series(liveServer, watchTask);

@@ -8,77 +8,112 @@
     <title>REST API</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
 
 </head>
 
 <body>
-    <main>
-        <h1>Rest API - Moment 5</h1>
+<main>
+    <h1>Rest API - Moment 5</h1>
 
-        <section>
+    <section>
 
 
-            <h2>Lägg till kurs</h2>
+        <h2>Lägg till kurs</h2>
 
-            <div>
-                <form action="#" id="newCourseForm">
-                        <label>Kurskod*
-                            <input name='code' type="text" required>
-                        </label>
-                        <label>Kursnamn*
-                            <input name='name' type="text" required>
-                        </label>
-                        <label>Progression*
-                            <input name='progression' type="text" required>
-                        </label>
-                        <label>Kursplan
-                            <input name='syllabus' type="text">
-                        </label>
-                        <label>Skola
-                            <input name='school' type="text">
-                        </label>
+        <div>
+            <!--                <form action="#" id="newCourseForm">-->
+            <!--                        <label><span class="hidden">Kurskod*</span>-->
+            <!--                            <input  placeholder="Kurskod - AB123C" name='code' type="text" required>-->
+            <!--                        </label>-->
+            <!--                        <label><span class="hidden"> Kursnamn*</span>-->
+            <!--                            <input placeholder="Kursnamn"  name='name' type="text" required>-->
+            <!--                        </label>-->
+            <!--                        <label><span class="hidden"> Progression*</span>-->
+            <!--                            <input  placeholder="Progression - A, B, C" name='progression' type="text" required>-->
+            <!--                        </label>-->
+            <!--                        <label><span class="hidden"> Kursplan</span>-->
+            <!--                            <input placeholder="Kursplan - www.skola.se"  name='syllabus' type="text" required>-->
+            <!--                        </label>-->
+            <!--                        <label><span class="hidden"> Skola</span>-->
+            <!--                            <input placeholder="Universitet"  name='school' type="text">-->
+            <!--                        </label>-->
 
-                    <input type="submit" id="addCourse" value="Lägg till">
+            <!--                    <input type="submit" id="addCourse" value="Lägg till">-->
 
+            <details>
+                <summary>Lägg till kurs</summary>
+                <form class="form-style-7" id="newCourseForm">
+                    <ul>
+                        <li>
+                            <label for="course-code">Kurskod*</label>
+                            <input type="text" id="course-code" maxlength="100" required>
+                            <span>Kurskod - AB123C</span>
+                        </li>
+                        <li>
+                            <label for="course-name">Kursnamn*</label>
+                            <input type="text" id="course-name" maxlength="100" required>
+                            <span>Kursens namn</span>
+                        </li>
+                        <li>
+                            <label for="course-progression">Progression*</label>
+                            <input type="text" id="course-progression" maxlength="100" required>
+                            <span>Nivå för kurs - A / B / C</span>
+                        </li>
+                        <li>
+                            <label for="course-syllabus">Kursplan*</label>
+                            <input type="url" id="course-syllabus" maxlength="100" required>
+                            <span>Länk till kursplan</span>
+                        </li>
+
+                        <li>
+                            <label for="course-school">Universitet</label>
+                            <input type="url" id="course-school" maxlength="100">
+                            <span>På vilken skola kursen lästes</span>
+                        </li>
+
+
+                        <li>
+                            <input type="submit" id="addCourse" value="Lägg till kurs">
+                        </li>
+                    </ul>
                 </form>
-            </div>
+        </details>
+        </div>
 
+    </section>
+
+    <section id="courses-container">
+        <h2>Kurser som jag läst</h2>
+        <section>
+            <h3>Filtrera</h3>
+            <input type="search" id="search-bar" placeholder="Sök på namn, kurskod eller skola">
+            <span id="search-info"></span>
         </section>
 
-        <section id="courses-container">
-            <h2>Kurser som jag läst</h2>
-            <section>
-                <h3>Filtrera</h3>
-                <input type="search" id="search-bar" placeholder="Sök på namn, kurskod eller skola">
-                <span id="search-info"></span>
-            </section>
-
-            <table id="courses-table">
-                <thead>
-                    <tr>
-                        <th>Kurskod</th>
-                        <th>Namn</th>
-                        <th>Progression</th>
-                        <th>Universitet</th>
-                        <th>Kursplan</th>
-                        <th>Raderigera</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <img src="assets/loading.svg" alt="">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-    </main>
-    <script src="js/main.js"></script>
+        <table id="courses-table">
+            <thead>
+            <tr>
+                <th>Kurskod</th>
+                <th>Namn</th>
+                <th>Progression</th>
+                <th>Universitet</th>
+                <th>Kursplan</th>
+                <th>Raderigera</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="6">
+                    <img class="loading" src="assets/loading.svg" alt="">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<script src="js/main.js"></script>
 </body>
 
 </html>
