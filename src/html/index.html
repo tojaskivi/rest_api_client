@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REST API</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
@@ -15,40 +16,23 @@
 
 <body>
 <main>
-    <h1>Rest API - Moment 5</h1>
-
+    <header>
+        <h1>Rest API - Moment 5</h1>
+        <button onclick="addNewCourse()" class="button">Lägg till kurs</button>
+    </header>
     <section>
-
-
-        <h2>Lägg till kurs</h2>
+        <h2 class="hidden">Lägg till kurs</h2>
 
         <div>
-            <!--                <form action="#" id="newCourseForm">-->
-            <!--                        <label><span class="hidden">Kurskod*</span>-->
-            <!--                            <input  placeholder="Kurskod - AB123C" name='code' type="text" required>-->
-            <!--                        </label>-->
-            <!--                        <label><span class="hidden"> Kursnamn*</span>-->
-            <!--                            <input placeholder="Kursnamn"  name='name' type="text" required>-->
-            <!--                        </label>-->
-            <!--                        <label><span class="hidden"> Progression*</span>-->
-            <!--                            <input  placeholder="Progression - A, B, C" name='progression' type="text" required>-->
-            <!--                        </label>-->
-            <!--                        <label><span class="hidden"> Kursplan</span>-->
-            <!--                            <input placeholder="Kursplan - www.skola.se"  name='syllabus' type="text" required>-->
-            <!--                        </label>-->
-            <!--                        <label><span class="hidden"> Skola</span>-->
-            <!--                            <input placeholder="Universitet"  name='school' type="text">-->
-            <!--                        </label>-->
-
-            <!--                    <input type="submit" id="addCourse" value="Lägg till">-->
-
-            <details>
-                <summary>Lägg till kurs</summary>
-                <form class="form-style-7" id="newCourseForm">
+            <div id="overlay-container" class="overlay-container hidden">
+                <div class="overlay" id="overlay"></div>
+                <form class="form-style-7 modal" id="form-new-course">
+                    <h2>Lägg till en kurs</h2>
+                    <button onclick="hideForms()" class="button-close"><i class="fas fa-times"></i></button>
                     <ul>
                         <li>
                             <label for="course-code">Kurskod*</label>
-                            <input type="text" id="course-code" maxlength="100" required>
+                            <input type="text" id="course-code" maxlength="10" required>
                             <span>Kurskod - AB123C</span>
                         </li>
                         <li>
@@ -66,30 +50,29 @@
                             <input type="url" id="course-syllabus" maxlength="100" required>
                             <span>Länk till kursplan</span>
                         </li>
-
                         <li>
                             <label for="course-school">Universitet</label>
                             <input type="url" id="course-school" maxlength="100">
                             <span>På vilken skola kursen lästes</span>
                         </li>
-
-
                         <li>
-                            <input type="submit" id="addCourse" value="Lägg till kurs">
+                            <input type="submit" class="button" id="addCourse" value="Lägg till kurs">
                         </li>
                     </ul>
                 </form>
-        </details>
+            </div>
         </div>
 
     </section>
 
     <section id="courses-container">
-        <h2>Kurser som jag läst</h2>
+        <h2 class="hidden">Kurser som jag läst</h2>
         <section>
-            <h3>Filtrera</h3>
-            <input type="search" id="search-bar" placeholder="Sök på namn, kurskod eller skola">
-            <span id="search-info"></span>
+            <h3 class="hidden">Filtrera</h3>
+            <label for="search-bar" class="hidden">Sök efter kurs</label>
+            <div class="search-bar-container">
+                <input type="search" id="search-bar" placeholder="Sök på namn, kurskod eller skola">
+            </div>
         </section>
 
         <table id="courses-table">
@@ -113,6 +96,15 @@
         </table>
     </section>
 </main>
+
+<footer>
+    &copy; 2021 || Tommi Ojaskivi
+
+    <nav>
+        <a href="https://github.com/toskivi" target="blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/tommiojaskivi" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </nav>
+</footer>
 <script src="js/main.js"></script>
 </body>
 
