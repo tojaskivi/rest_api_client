@@ -1,14 +1,17 @@
+@import "variables";
 
-@import 'variables';
-
-*{
-    padding: 0;
-    margin:0;
-    box-sizing: border-box;
-    line-height: 1.65;
-    font-family: $font;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.65;
+  font-family: $font;
 }
 
-a{
-    color: inherit;
+a {
+  color: inherit;
+}
+
+hr {
+  margin: 2rem 0;
 }

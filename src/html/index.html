@@ -1,111 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>REST API</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
 
-
-</head>
-
-<body>
-<main>
-    <header>
+  <body>
+    <main>
+      <header>
         <h1>Rest API - Moment 5</h1>
-        <button onclick="addNewCourse()" class="button">Lägg till kurs</button>
-    </header>
-    <section>
-        <h2 class="hidden">Lägg till kurs</h2>
+        <nav id="main-menu" class="button">
+          <form id="sign-in-form">
+            <div class="flex">
+              <label for="login-input" class="hide-me">API Token</label>
+              <input
+                name="token"
+                id="login-input"
+                placeholder="Ange inloggning - Sex tecken"
+                type="text"
+                pattern="[A-Fa-f0-9]{6}"
+              />
+              <input type="submit" value="logga in" id="sign-in" />
+            </div>
+            <span id="login-input-info" class="api-info"></span>
+          </form>
+        </nav>
+      </header>
+
+      <section>
+        <h2 class="hide-me">Lägg till kurs</h2>
 
         <div>
-            <div id="overlay-container" class="overlay-container hidden">
-                <div class="overlay" id="overlay"></div>
-                <form class="form-style-7 modal" id="form-new-course">
-                    <h2>Lägg till en kurs</h2>
-                    <button onclick="hideForms()" class="button-close"><i class="fas fa-times"></i></button>
-                    <ul>
-                        <li>
-                            <label for="course-code">Kurskod*</label>
-                            <input type="text" id="course-code" maxlength="10" required>
-                            <span>Kurskod - AB123C</span>
-                        </li>
-                        <li>
-                            <label for="course-name">Kursnamn*</label>
-                            <input type="text" id="course-name" maxlength="100" required>
-                            <span>Kursens namn</span>
-                        </li>
-                        <li>
-                            <label for="course-progression">Progression*</label>
-                            <input type="text" id="course-progression" maxlength="100" required>
-                            <span>Nivå för kurs - A / B / C</span>
-                        </li>
-                        <li>
-                            <label for="course-syllabus">Kursplan*</label>
-                            <input type="url" id="course-syllabus" maxlength="100" required>
-                            <span>Länk till kursplan</span>
-                        </li>
-                        <li>
-                            <label for="course-school">Universitet</label>
-                            <input type="url" id="course-school" maxlength="100">
-                            <span>På vilken skola kursen lästes</span>
-                        </li>
-                        <li>
-                            <input type="submit" class="button" id="addCourse" value="Lägg till kurs">
-                        </li>
-                    </ul>
-                </form>
-            </div>
+          <div id="overlay-container" class="overlay-container hidden">
+            <div class="overlay" id="overlay"></div>
+            <form
+              class="form-style-7 modal"
+              name="form-new-course"
+              id="form-new-course"
+            >
+              <h2>Lägg till en kurs</h2>
+              <button onclick="hideForms()" class="button-close">
+                <i class="fas fa-times"></i>
+              </button>
+              <div>
+                <div>
+                  <label for="course-code">Kurskod*</label>
+                  <input
+                    type="text"
+                    name="code"
+                    id="course-code"
+                    maxlength="15"
+                    required
+                  />
+                  <span>Kurskod - AB123C</span>
+                </div>
+                <div>
+                  <label for="course-name">Kursnamn*</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="course-name"
+                    maxlength="100"
+                    required
+                  />
+                  <span>Kursens namn</span>
+                </div>
+                <div>
+                  <label for="course-progression">Progression*</label>
+                  <input
+                    type="text"
+                    name="progression"
+                    id="course-progression"
+                    maxlength="1"
+                    required
+                  />
+                  <span>Nivå för kurs - A / B / C</span>
+                </div>
+                <div>
+                  <label for="course-syllabus">Kursplan*</label>
+                  <input
+                    type="url"
+                    name="syllabus"
+                    id="course-syllabus"
+                    maxlength="225"
+                    required
+                  />
+                  <span>Länk till kursplan</span>
+                </div>
+                <div>
+                  <label for="course-school">Universitet</label>
+                  <input
+                    type="text"
+                    name="school"
+                    id="course-school"
+                    maxlength="50"
+                  />
+                  <span>På vilken skola kursen lästes</span>
+                </div>
+                <div>
+                  <input
+                    type="submit"
+                    class="button"
+                    id="add-course"
+                    value="Lägg till kurs"
+                  />
+                </div>
+              </div>
+            </form>
+
+            <form
+              class="form-style-7 modal"
+              method="POST"
+              id="form-edit-course"
+            >
+              <h2>Ändra befintlig kurs</h2>
+              <button onclick="hideForms()" class="button-close">
+                <i class="fas fa-times"></i>
+              </button>
+              <div>
+                <div>
+                  <label for="edit-course-code">Kurskod*</label>
+                  <input
+                    type="text"
+                    name="code"
+                    id="edit-course-code"
+                    maxlength="15"
+                    required
+                  />
+                  <span>Kurskod - AB123C</span>
+                </div>
+                <div>
+                  <label for="edit-course-name">Kursnamn*</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="edit-course-name"
+                    maxlength="100"
+                    required
+                  />
+                  <span>Kursens namn</span>
+                </div>
+                <div>
+                  <label for="edit-course-progression">Progression*</label>
+                  <input
+                    type="text"
+                    name="progression"
+                    id="edit-course-progression"
+                    maxlength="1"
+                    required
+                  />
+                  <span>Nivå för kurs - A / B / C</span>
+                </div>
+                <div>
+                  <label for="edit-course-syllabus">Kursplan*</label>
+                  <input
+                    type="url"
+                    name="syllabus"
+                    id="edit-course-syllabus"
+                    maxlength="225"
+                    required
+                  />
+                  <span>Länk till kursplan</span>
+                </div>
+                <div>
+                  <label for="edit-course-school">Universitet</label>
+                  <input
+                    type="text"
+                    name="school"
+                    id="edit-course-school"
+                    maxlength="50"
+                  />
+                  <span>På vilken skola kursen lästes</span>
+                </div>
+                <div>
+                  <input
+                    type="submit"
+                    class="button"
+                    id="edit-course"
+                    value="Uppdatera kurs"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="courses-container">
+        <h2 class="hide-me">Kurser som jag läst</h2>
+        <div class="search-and-add">
+          <section>
+            <h3 class="hide-me">Sök</h3>
+            <form class="search-bar-container" id="form-search">
+              <label for="search-bar" class="hide-me">Sök efter kurs</label>
+              <input
+                type="search"
+                id="search-bar"
+                placeholder="Sök på kursnamn, kurskod eller skola"
+              />
+              <input type="submit" value="Sök" />
+            </form>
+          </section>
+          <button class="button" id="show-form-new" onclick="showForm(event)">Lägg till kurs</button>
         </div>
 
-    </section>
+        <div id="courses-table">
+          <img class="loading" src="assets/loading.svg" alt="" />
+        </div>
 
-    <section id="courses-container">
-        <h2 class="hidden">Kurser som jag läst</h2>
-        <section>
-            <h3 class="hidden">Filtrera</h3>
-            <label for="search-bar" class="hidden">Sök efter kurs</label>
-            <div class="search-bar-container">
-                <input type="search" id="search-bar" placeholder="Sök på namn, kurskod eller skola">
-            </div>
-        </section>
+        <!-- display: grid;
+        grid-template-columns: 6rem auto 3rem 5rem 6rem 6rem; -->
 
-        <table id="courses-table">
-            <thead>
+        <!--<table id="courses-table">
+          <thead>
             <tr>
-                <th>Kurskod</th>
-                <th>Namn</th>
-                <th>Progression</th>
-                <th>Universitet</th>
-                <th>Kursplan</th>
-                <th>Raderigera</th>
+              <th>Kurskod</th>
+              <th>Namn</th>
+              <th>Progression</th>
+              <th>Universitet</th>
+              <th>Kursplan</th>
+              <th>Inställningar</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td colspan="6">
-                    <img class="loading" src="assets/loading.svg" alt="">
-                </td>
+              <td colspan="6">
+                <img class="loading" src="assets/loading.svg" alt="" />
+              </td>
             </tr>
-            </tbody>
-        </table>
-    </section>
-</main>
+          </tbody>
+        </table>-->
 
-<footer>
-    &copy; 2021 || Tommi Ojaskivi
+        <hr>
+      <p class="api-info">Want an API-key? Send me an <a href="mailto:api@ojaskivi.se">email</a>, or use the one provided in the README.</p>
+      </section>
+    </main>
 
-    <nav>
-        <a href="https://github.com/toskivi" target="blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/tommiojaskivi" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    </nav>
-</footer>
-<script src="js/main.js"></script>
-</body>
+    <footer>
+      &copy; 2021 || Tommi Ojaskivi
 
+      <nav>
+        <a href="https://github.com/toskivi" target="blank"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a href="https://www.linkedin.com/in/tommiojaskivi" target="_blank"
+          ><i class="fab fa-linkedin-in"></i
+        ></a>
+      </nav>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
 </html>
