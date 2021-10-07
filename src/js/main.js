@@ -1,4 +1,4 @@
-console.log("Version 0.9.7");
+console.log("Version 1.0");
 
 const mainMenuEl = document.getElementById('main-menu');
 
@@ -107,7 +107,7 @@ newCourseFormEl.addEventListener('submit', async function (e) {
 
     const response = await fetch("https://ojaskivi.se/rest_api/public/api/courses", meta)
 
-    if (response.status >= 200 || response.status < 300) {
+    if (response.status >= 200 && response.status < 300) {
         newCourseFormEl.reset();
         await fetchText();
         hideForms();
@@ -115,8 +115,8 @@ newCourseFormEl.addEventListener('submit', async function (e) {
 })
 
 async function fetchText(url = API_URL) {
-    let response = await fetch(url);
-    if (response.status >= 200 || response.status < 300) {
+    const response = await fetch(url);
+    if (response.status >= 200 && response.status < 300) {
         let data = await response.json();
         printCourses(data);
     }
@@ -180,8 +180,6 @@ async function destroy(e) {
 
     if (confirm("Vill du radera kursen? Detta går inte att ändra.")) {
 
-        console.log(e);
-
         let meta = {
             method: 'DELETE',
             headers: {
@@ -191,11 +189,10 @@ async function destroy(e) {
             }
         }
 
-        //let response = await fetch(`https://ojaskivi.se/rest_api/public/api/courses/${e.dataset.id}`, meta)
-        e.closest('.course-table-row').classList.add('removed')
-
-        if (response.status >= 200 || response.status < 300) {
-
+        const response = await fetch(`https://ojaskivi.se/rest_api/public/api/courses/${e.dataset.id}`, meta)
+        
+        if (response.status >= 200 && response.status < 300) {
+            e.closest('.course-table-row').classList.add('removed')
         }
     }
 }
