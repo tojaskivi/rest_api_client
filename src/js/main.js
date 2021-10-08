@@ -2,6 +2,7 @@ console.log("Version 1.0");
 
 const mainMenuEl = document.getElementById('main-menu');
 
+// se om en användare är inloggad eller ej
 let TOKEN = localStorage.getItem('api-token');
 let NAME = localStorage.getItem('api-name');
 if (TOKEN) {
@@ -12,13 +13,22 @@ const coursesTableEl = document.getElementById("courses-table");
 const searchFormEl = document.getElementById("form-search");
 
 searchFormEl.addEventListener("submit", async (e) => {
+    // förhindra att formulärets standardfunktion sker, alltså att sidan läses om och formuläret försöker göra något
     e.preventDefault();
     let searchTerm = document.getElementById('search-bar').value;
 
     let url = `https://ojaskivi.se/rest_api/public/api/courses/search/${searchTerm}`
+
+    // om sökningen är tom, hämta alla kurser
     if (searchTerm == "") url = `https://ojaskivi.se/rest_api/public/api/courses`
+
+    // vänta på svar från fetch
     const response = await fetch(url);
+
+    // gör om svaret från fetch till json
     let data = await response.json();
+
+    // skriv ut kurserna
     printCourses(data);
 });
 
@@ -28,9 +38,13 @@ const signInFormEl = document.getElementById('sign-in-form');
 if (signInFormEl) {
     signInFormEl.addEventListener('submit', async function (e) {
         e.preventDefault();
-        let it = new FormData(e.target.closest('form'));
+
+        // hämta data från händelsens närmsta form
+        let formData = new FormData(e.target.closest('form'));
         let stringToken = "";
-        for (var value of it.values()) {
+
+        // hämta data från formuläret
+        for (let value of formData.values()) {
             stringToken = value;
         }
 
@@ -38,22 +52,25 @@ if (signInFormEl) {
             token: stringToken.toUpperCase()
         }
 
-        let signature = JSON.stringify(object);
-
-        const response = await fetch("https://ojaskivi.se/rest_api/public/api/login", {
+        // parametrar som requesten ska innehålla, t.ex. vilken metod (GET, POST, PUT, DELETE) samt vilka headers
+        // body är själva innehållet som skickas
+        const meta = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            mode: 'cors',
-            body: signature
-        }).then((response) => response.json())
+            body: JSON.stringify(object)
+        }
+
+        const response = await fetch("https://ojaskivi.se/rest_api/public/api/login", meta)
+            .then((response) => response.json())
             .then(data => { return data; })
             .catch(error => {
                 console.error(error);
             });
 
+        // om requesten återkommer med en token har det lyckats, annars misslyckades det
         if (response.token) {
             localStorage.setItem('api-token', response.token);
             localStorage.setItem('api-name', response.user.name);
@@ -66,6 +83,7 @@ if (signInFormEl) {
 }
 
 function signOut() {
+    // inloggningen är genom att en token sparas i localStorage, så vid utloggning rensas den
     localStorage.clear();
     mainMenuEl.innerHTML = `<form id="sign-in-form">
     <div class="flex">
@@ -87,13 +105,18 @@ function signOut() {
 const newCourseFormEl = document.getElementById("form-new-course");
 newCourseFormEl.addEventListener('submit', async function (e) {
     e.preventDefault();
-    let it = new FormData(e.target.closest('form'));
+
+    let formData = new FormData(e.target.closest('form'));
 
     let object = {};
-    for (let [key, value] of it.entries()) {
+
+    // hämta innehållet från formuläret och stoppa in i ett objekt
+    for (let [key, value] of formData.entries()) {
         object[key] = value;
     }
 
+    // detta anrop kräver en autentisering, då skickas en "Bearer"-token med under 'Authorization'
+    // denna token är null om inte en användare är inloggad
     const meta = {
         method: 'POST',
         headers: {
@@ -107,6 +130,8 @@ newCourseFormEl.addEventListener('submit', async function (e) {
 
     const response = await fetch("https://ojaskivi.se/rest_api/public/api/courses", meta)
 
+    // om svaret är mellan 200 och 299 är det okej/bra/lyckat
+    // rensa formuläret, gör ett nytt anrop till kurserna, göm formulären
     if (response.status >= 200 && response.status < 300) {
         newCourseFormEl.reset();
         await fetchText();
@@ -114,18 +139,19 @@ newCourseFormEl.addEventListener('submit', async function (e) {
     }
 })
 
+// funktion för att kalla på APIet och skriva ut kurser
 async function fetchText(url = API_URL) {
     const response = await fetch(url);
     if (response.status >= 200 && response.status < 300) {
         let data = await response.json();
         printCourses(data);
     }
-
-
 }
 
 function printCourses(courses) {
 
+    // detta var till en början en table, men det var jobbigt att mobilanpassa, så gjorde det såhär istället...
+    // ...för att det var mindre jobbigt... eller?
     let row = `
     <div class="course-table-head course-table-row">
     <div><span>Kurskod</span>
@@ -143,6 +169,7 @@ function printCourses(courses) {
         return;
     }
 
+    // iterera igenom alla hämtade kurser
     courses.forEach((course) => {
         let school = "-";
         let syllabus = "";
@@ -173,6 +200,7 @@ const API_URL = "https://ojaskivi.se/rest_api/public/api/courses";
 fetchText(API_URL);
 
 async function destroy(e) {
+    // måste vara inloggad för att radera kurs
     if (!TOKEN) {
         alert("Logga in för att ändra eller lägga till en kurs");
         return;
@@ -180,6 +208,7 @@ async function destroy(e) {
 
     if (confirm("Vill du radera kursen? Detta går inte att ändra.")) {
 
+        // även om användaren "fejkar" en inloggning, måste token vara rätt här för att lyckas
         let meta = {
             method: 'DELETE',
             headers: {
@@ -190,16 +219,19 @@ async function destroy(e) {
         }
 
         const response = await fetch(`https://ojaskivi.se/rest_api/public/api/courses/${e.dataset.id}`, meta)
-        
+
         if (response.status >= 200 && response.status < 300) {
+            // "Radera" kursen tills de läses om igen för att visa att den faktiskt är raderad
             e.closest('.course-table-row').classList.add('removed')
         }
     }
 }
 
+// mörka bakgrunden som visas när ett formulär är framme
 let overlayContainerEl = document.getElementById("overlay-container");
 let overlayEl = document.getElementById("overlay");
 
+// göm formulär om overlayn klickas på
 overlayEl.addEventListener("click", function () {
     hideForms();
 })
@@ -214,11 +246,10 @@ editCourseFormEl.addEventListener('submit', async function (e) {
     e.preventDefault();
     let form = e.target.closest('form');
     const courseId = form.dataset.id;
-    let it = new FormData(form);
+    let formData = new FormData(form);
 
-    let data = [];
     let object = {};
-    for (let [key, value] of it.entries()) {
+    for (let [key, value] of formData.entries()) {
         object[key] = value;
     }
 
@@ -240,7 +271,8 @@ editCourseFormEl.addEventListener('submit', async function (e) {
 
 })
 
-
+// fyll i formuläret med kursens data
+// dataset är bäst <3
 function fillEditForm(data) {
 
     editCourseFormEl.dataset.id = data.id;
