@@ -16,12 +16,20 @@ Sedan körs kommandot `gulp build`, för att bygga upp projektet från grunden f
 
 - Sidan kommer byggas om med TypeScript istället för JavaScript.
 - All JS-kod kommer optimeras och förbättras.
+- SASSen behöver ses över och förbättras
 
 ## Länkar
 
 Klientsidan hittas [här](https://ojaskivi.se/rest_api/client/). Inloggningen är **D26A80**, med versaler.
 
+
 REST APIet hittas [här](https://ojaskivi.se/rest_api/public/api/).
+
+En minidokumentation över APIet och dess funktioner hittas i APIets [readme](https://github.com/toskivi/rest_api_api).
+
+För att klona detta repo: `git clone https://github.com/toskivi/rest_api_client.git`
+
+För att klona APIets repo: `git clone https://github.com/toskivi/rest_api_api.git`
 
 ---
 

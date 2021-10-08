@@ -12,6 +12,7 @@ $border-radius: 0.3rem;
 
 $fullWidth: 1200px;
 
+// Media queries
 @mixin tablet {
   @media screen and (max-width: 768px) {
     @content;

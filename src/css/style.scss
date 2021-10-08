@@ -132,10 +132,6 @@ button {
   color: $dshade;
   align-items: center;
 
-  & > :last-child() {
-    display: none;
-  }
-
   @include mobile {
     & {
       grid-template-columns: auto 5rem 3rem;
@@ -246,7 +242,7 @@ button {
   }
 }
 
-.form-style-7 {
+.form-styling {
   max-width: 400px;
   margin: 50px auto;
   border-radius: $border-radius;
